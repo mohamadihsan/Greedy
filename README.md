@@ -1,3 +1,1 @@
-ALGORITMA DIJKSTRA
-Kalo mau ganti boleh
-
+CEK programnya, buka main.c, mau itu atau rubah Algoritma lagi? 
