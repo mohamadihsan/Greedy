@@ -1,1 +1,1 @@
-CEK programnya, buka main.c, mau itu atau rubah Algoritma lagi? 
+CEK programnya, buka main.c atau kruskal.c, mau yang mana? 
