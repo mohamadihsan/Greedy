@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <conio.h>
 
-#define MAXNODES 50
-#define MAX1 150
-#define INFINITY 5000
+#define MAXNODES 	50
+#define MAX1 		150
+#define INFINITY 	5000
 
 int weight[MAXNODES][MAXNODES], i, j, distance[MAXNODES], visit[MAXNODES];
 int precede[MAXNODES], final=0;
@@ -36,9 +36,12 @@ main() {
 	scanf("%d", &n);
 	printf("\nEnter the cost matrix :\n\n");
 
-	for(i = 0; i < n; i++)
-  		for(j = 0; j < n; j++)
-    		scanf("%d",&weight[i][j]);
+	for(i = 0; i < n; i++) {
+	  		for(j = 0; j < n; j++) {
+	  			printf("Matrix Element [%d,%d]: ", i+1, j+1);
+	    		scanf("%d",&weight[i][j]);
+	  		}
+	}
 
 	printf("\nEnter the source node (0 to %d) : ", n-1);
 	scanf("%d", &s);
