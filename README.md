@@ -1,1 +1,2 @@
-CEK programnya, buka main.c atau kruskal.c, mau yang mana? 
+Jadinya Djikstra yang main.c
+Paling edit tampilan sama tambah validasi
