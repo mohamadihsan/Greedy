@@ -1,16 +1,17 @@
 #include <stdio.h>
 #include <conio.h>
+#include <conio2.h>
 
-#define MAXNODES 	50
-#define MAX1 		150
-#define INFINITY 	5000
+#define max_node 	50
+#define max1 		150
+#define infinity 	5000
 
-int weight[MAXNODES][MAXNODES], i, j, jarak[MAXNODES], visit[MAXNODES];
-int mendahului[MAXNODES], final=0;
-int jalan[MAX1];
-int smalldist, newdist, k, s, d, current, n, distcurr;
+int matriks[max_node][max_node], i, j, jarak[max_node], kunjungan[max_node];
+int mendahului[max_node], final=0;
+int jalan[max1];
+int jarak_kecil, jarak_baru, k, s, d, alur, n, alur_jalan;
 
-void Display_Result() {
+void hasil_tampilan() {
 	i = d;
 	jalan[final] = d;
 	final++;
@@ -26,57 +27,82 @@ void Display_Result() {
 	printf("\nJalur terpendek yang diikuti :\n\n");
 
 	for(i = final; i > 0; i--)
- 		printf("\t\t(%d -> %d) dengan harga/jarak =  %d\n\n", jalan[i], jalan[i-1], weight[jalan[i]][jalan[i-1]]);
+ 		printf("\t\t(%d -> %d) dengan harga/jarak =  %d\n\n", jalan[i], jalan[i-1], matriks[jalan[i]][jalan[i-1]]);
 
 	printf("\nTotal harga/jarak = %d", jarak[d]);
 }
 
 main() {
-	printf("\nMasukkan jumlah node dalam matriks [1..50] :  ");
-	scanf("%d", &n);
+	do
+	{
+		system("cls");
+		printf("\n=============== ALGORTIMA DIJKSTRA ===============\n\n");
+		printf("\nMasukkan jumlah node dalam matriks [1..50] :  ");
+		scanf("%d", &n);
+		if(n>50)
+		{
+			textcolor(LIGHTRED);printf("\nJumlah node hanya sampai 50\n");
+			textcolor(WHITE);getch();
+		}
+	}while(n>50);
 	printf("\nMasukkan harga/jarak matrix :\n\n");
 
 	for(i = 0; i < n; i++) {
 	  		for(j = 0; j < n; j++) {
 	  			printf("Matrix Element [%d,%d]: ", i+1, j+1);
-	    		scanf("%d",&weight[i][j]);
+	    		scanf("%d",&matriks[i][j]);
 	  		}
 	}
 
 	printf("\nMasukkan node sumber (0 ke %d) : ", n-1);
 	scanf("%d", &s);
-	printf("\nMasukkan node tujuan (0 ke %d) : ", n-1);
-	scanf("%d", &d); 
+	do
+	{
+		printf("\nMasukkan node tujuan (0 ke %d) : ", n-1);
+		scanf("%d", &d); 
+		if(d>n-1)
+		{
+			textcolor(LIGHTRED);printf("Node tidak ada, Silahkan ULANGI");
+			textcolor(WHITE);getch();
+		}
+		if(d==s)
+		{
+			textcolor(LIGHTRED);printf("\nNode berada di tempat yang tetap\n");
+			textcolor(WHITE);printf("Jarak = 0");
+			getch();exit(0);
+		}
+	}while(d>n-1);
 	for(i = 0; i < n; i++) {
-  		jarak[i] = INFINITY;
-  		mendahului[i]  = INFINITY;
+  		jarak[i] = infinity;
+  		mendahului[i]  = infinity;
 	}
 
 	jarak[s]    = 0;
-	current        = s;
-	visit[current] = 1;
-	while(current != d) {
-  		distcurr  = jarak[current];
-  		smalldist = INFINITY;
+	alur        = s;
+	kunjungan[alur] = 1;
+	while(alur != d) {
+  		alur_jalan  = jarak[alur];
+  		jarak_kecil = infinity;
   
   		for(i = 0; i < n; i++) {
-    		if(visit[i] == 0) {
-      			newdist = distcurr + weight[current][i];
-      			if(newdist < jarak[i]) {
-    				jarak[i] = newdist;
-    				mendahului[i]  = current;
+    		if(kunjungan[i] == 0) {
+      			jarak_baru = alur_jalan + matriks[alur][i];
+      			if(jarak_baru < jarak[i]) {
+    				jarak[i] = jarak_baru;
+    				mendahului[i]  = alur;
       			}
-      			if(jarak[i]<smalldist) {
-    				smalldist = jarak[i];
+      			if(jarak[i]<jarak_kecil) {
+    				jarak_kecil = jarak[i];
     				k = i;
       			}
     		}
     	}
 
-  		current = k;
-  		visit[current] = 1;
+  		alur = k;
+  		kunjungan[alur] = 1;
 	}
 
-	Display_Result();
+	hasil_tampilan();
 	getch();
 }
+
