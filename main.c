@@ -1,77 +1,82 @@
-#include<stdio.h>
-#include<conio.h>
-#define MAXNODES 50
-#define MAX1 150
-#define INFINITY 5000
+#include <stdio.h>
+#include <conio.h>
 
-//using namespace std;
+#define MAXNODES 	50
+#define MAX1 		150
+#define INFINITY 	5000
 
-int weight[MAXNODES][MAXNODES],i,j,distance[MAXNODES],visit[MAXNODES];
-int precede[MAXNODES],final=0;
-int path[MAX1];
-int smalldist,newdist,k,s,d,current,n,distcurr;
+int weight[MAXNODES][MAXNODES], i, j, jarak[MAXNODES], visit[MAXNODES];
+int precede[MAXNODES], final=0;
+int jalan[MAX1];
+int smalldist, newdist, k, s, d, current, n, distcurr;
 
-void Display_Result()
-{
-i=d;
-path[final]=d;
-final++;
-while(precede[i]!=s)
-{
-  j=precede[i];
-  i=j;
-  path[final]=i;
-  final++;
-}
-path[final]=s;
-printf("\nThe shortest path followed is :\n\n");
-for(i=final;i>0;i--)
- printf("\t\t(%d -> %d) with cost = %d\n\n",path[i],path[i-1],weight[path[i]][path[i-1]]);
-printf("\nFor total cost = %d",distance[d]);
+void Display_Result() {
+	i = d;
+	jalan[final] = d;
+	final++;
+ 
+	while(precede[i] != s) {
+  		j = precede[i];
+  		i = j;
+  		jalan[final] = i;
+  		final++;
+	}
+
+	jalan[final] = s;
+	printf("\nJalur terpendek yang diikuti :\n\n");
+
+	for(i = final; i > 0; i--)
+ 		printf("\t\t(%d -> %d) dengan harga/jarak =  %d\n\n", jalan[i], jalan[i-1], weight[jalan[i]][jalan[i-1]]);
+
+	printf("\nTotal harga/jarak = %d", jarak[d]);
 }
 
-main()
-{
-printf("\nEnter the number of nodes(Less than 50)in the matrix : ");
-scanf("%d",&n);
-printf("\nEnter the cost matrix :\n\n");
-for(i=0;i<n;i++)
-  for(j=0;j<n;j++)
-    scanf("%d",&weight[i][j]);
-printf("\nEnter the source node (0 to %d) : ",n-1);
-scanf("%d",&s);
-printf("\nEnter the destination node (0 to %d) : ",n-1);
-scanf("%d",&d); 
-for(i=0;i<n;i++)
-{
-  distance[i]=INFINITY;
-  precede[i]=INFINITY;
-}
-distance[s]=0;
-current=s;
-visit[current]=1;
-while(current!=d)
-{
-  distcurr=distance[current];
-  smalldist=INFINITY;
-  for(i=0;i<n;i++)
-    if(visit[i]==0)
-    {
-      newdist=distcurr+weight[current][i];
-      if(newdist<distance[i])
-      {
-    distance[i]=newdist;
-    precede[i]=current;
-      }
-      if(distance[i]<smalldist)
-      {
-    smalldist=distance[i];
-    k=i;
-      }
-    }
-  current=k;
-  visit[current]=1;
-}
-Display_Result();
-getch();
+main() {
+	printf("\nMasukkan jumlah node dalam matriks [1..50] :  ");
+	scanf("%d", &n);
+	printf("\nMasukkan harga/jarak matrix :\n\n");
+
+	for(i = 0; i < n; i++) {
+	  		for(j = 0; j < n; j++) {
+	  			printf("Matrix Element [%d,%d]: ", i+1, j+1);
+	    		scanf("%d",&weight[i][j]);
+	  		}
+	}
+
+	printf("\nMasukkan node sumber (0 ke %d) : ", n-1);
+	scanf("%d", &s);
+	printf("\nMasukkan node tujuan (0 ke %d) : ", n-1);
+	scanf("%d", &d); 
+	for(i = 0; i < n; i++) {
+  		jarak[i] = INFINITY;
+  		precede[i]  = INFINITY;
+	}
+
+	jarak[s]    = 0;
+	current        = s;
+	visit[current] = 1;
+	while(current != d) {
+  		distcurr  = jarak[current];
+  		smalldist = INFINITY;
+  
+  		for(i = 0; i < n; i++) {
+    		if(visit[i] == 0) {
+      			newdist = distcurr + weight[current][i];
+      			if(newdist < jarak[i]) {
+    				jarak[i] = newdist;
+    				precede[i]  = current;
+      			}
+      			if(jarak[i]<smalldist) {
+    				smalldist = jarak[i];
+    				k = i;
+      			}
+    		}
+    	}
+
+  		current = k;
+  		visit[current] = 1;
+	}
+
+	Display_Result();
+	getch();
 }
