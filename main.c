@@ -6,7 +6,7 @@
 #define INFINITY 	5000
 
 int weight[MAXNODES][MAXNODES], i, j, jarak[MAXNODES], visit[MAXNODES];
-int precede[MAXNODES], final=0;
+int mendahului[MAXNODES], final=0;
 int jalan[MAX1];
 int smalldist, newdist, k, s, d, current, n, distcurr;
 
@@ -15,8 +15,8 @@ void Display_Result() {
 	jalan[final] = d;
 	final++;
  
-	while(precede[i] != s) {
-  		j = precede[i];
+	while(mendahului[i] != s) {
+  		j = mendahului[i];
   		i = j;
   		jalan[final] = i;
   		final++;
@@ -49,7 +49,7 @@ main() {
 	scanf("%d", &d); 
 	for(i = 0; i < n; i++) {
   		jarak[i] = INFINITY;
-  		precede[i]  = INFINITY;
+  		mendahului[i]  = INFINITY;
 	}
 
 	jarak[s]    = 0;
@@ -64,7 +64,7 @@ main() {
       			newdist = distcurr + weight[current][i];
       			if(newdist < jarak[i]) {
     				jarak[i] = newdist;
-    				precede[i]  = current;
+    				mendahului[i]  = current;
       			}
       			if(jarak[i]<smalldist) {
     				smalldist = jarak[i];
